@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeWeightScale() {
         val electronicCallback = ElectronicCallback { weight, weightStatus ->
+            binding.tvConsole.text = "Log => W: $weight , S: $weightStatus"
             currentWeight = weight
             when (weightStatus) {
                 WeightStatus.OVERWEIGHT.value -> {
