@@ -33,23 +33,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeWeightScale() {
         val electronicCallback = ElectronicCallback { weight, weightStatus ->
-            binding.tvConsole.text = "Log => W: $weight , S: $weightStatus"
-            currentWeight = weight
-            when (weightStatus) {
-                WeightStatus.OVERWEIGHT.value -> {
-                    binding.tvWeightStatus.text = WeightStatus.OVERWEIGHT.name
-                }
+            runOnUiThread {
+                try {
+                    binding.tvConsole.text = "Log => W: $weight , S: $weightStatus"
+                    currentWeight = weight
+                    when (weightStatus) {
+                        WeightStatus.OVERWEIGHT.value -> {
+                            binding.tvWeightStatus.text = WeightStatus.OVERWEIGHT.name
+                        }
 
-                WeightStatus.STABLE.value -> {
-                    binding.tvWeightStatus.text = WeightStatus.STABLE.name
-                }
+                        WeightStatus.STABLE.value -> {
+                            binding.tvWeightStatus.text = WeightStatus.STABLE.name
+                        }
 
-                WeightStatus.UNSTABLE.value -> {
-                    binding.tvWeightStatus.text = WeightStatus.UNSTABLE.name
-                }
+                        WeightStatus.UNSTABLE.value -> {
+                            binding.tvWeightStatus.text = WeightStatus.UNSTABLE.name
+                        }
 
+                    }
+                    binding.tvWeight.text = "$weight KG"
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
-            binding.tvWeight.text = "$weight KG"
         }
         mElectronic = Electronic.Builder().setReceiveCallback(electronicCallback).builder()
     }
