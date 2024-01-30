@@ -1,6 +1,7 @@
 package com.example.weightcalculator
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weightcalculator.databinding.ActivityMainBinding
 import com.neostra.electronic.Electronic
@@ -60,6 +61,12 @@ class MainActivity : AppCompatActivity() {
         mElectronic = Electronic.Builder().setReceiveCallback(electronicCallback).builder()
     }
 
+    private fun setTextViewText(tvConsole: TextView, s: String) {
+        runOnUiThread {
+            tvConsole.text = s
+        }
+    }
+    
     private fun initializeButtons() {
         binding.btnZero.setOnClickListener {
             mElectronic?.turnZero()
